@@ -7,7 +7,7 @@ npm install zustand-mutative
 ```
 
 ## Usage
-```javascript
+```typescript
 import { create } from 'zustand'
 import { mutative } from 'zustand-mutative'
 
