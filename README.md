@@ -1,5 +1,12 @@
 # zustand-mutative
-A Mutative middleware for Zustand enhances the efficiency of immutable state updates.
+
+![Node CI](https://github.com/mutativejs/zustand-mutative/workflows/Node%20CI/badge.svg)
+[![npm](https://img.shields.io/npm/v/zustand-mutative.svg)](https://www.npmjs.com/package/zustand-mutative)
+![license](https://img.shields.io/npm/l/zustand-mutative)
+
+A [Mutative](https://github.com/unadlib/mutative) middleware for Zustand enhances the efficiency of immutable state updates.
+
+`zustand-mutative` is 2-6x faster than zustand with spread operation, more than 10x faster than `zustand/middleware/immer`.[Read more about the performance comparison in Mutative](https://mutative.js.org/docs/getting-started/performance).
 
 ## Installation
 

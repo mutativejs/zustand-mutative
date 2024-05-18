@@ -1,13 +1,24 @@
-import { create } from 'mutative';
+import {
+  create,
+  type Options as MutativeOptions,
+  PatchesOptions,
+} from 'mutative';
 import type { Draft } from 'mutative';
 import type { StateCreator, StoreMutatorIdentifier } from 'zustand';
+
+type Options<O extends PatchesOptions, F extends boolean> = Pick<
+  MutativeOptions<O, F>,
+  Exclude<keyof MutativeOptions<O, F>, 'enablePatches'>
+>;
 
 type Mutative = <
   T,
   Mps extends [StoreMutatorIdentifier, unknown][] = [],
-  Mcs extends [StoreMutatorIdentifier, unknown][] = []
+  Mcs extends [StoreMutatorIdentifier, unknown][] = [],
+  F extends boolean = false
 >(
-  initializer: StateCreator<T, [...Mps, ['zustand/mutative', never]], Mcs>
+  initializer: StateCreator<T, [...Mps, ['zustand/mutative', never]], Mcs>,
+  options?: Options<false, F>
 ) => StateCreator<T, Mps, [['zustand/mutative', never], ...Mcs]>;
 
 type Write<T, U> = Omit<T, keyof U> & U;
@@ -49,22 +60,29 @@ type StoreMutative<S> = S extends {
     : never
   : never;
 
-type MutativeImpl = <T>(
-  storeInitializer: StateCreator<T, [], []>
+type MutativeImpl = <T, F extends boolean = false>(
+  storeInitializer: StateCreator<T, [], []>,
+  options?: Options<false, F>
 ) => StateCreator<T, [], []>;
 
-const mutativeImpl: MutativeImpl = (initializer) => (set, get, store) => {
-  type T = ReturnType<typeof initializer>;
+const mutativeImpl: MutativeImpl =
+  (initializer, options) => (set, get, store) => {
+    type T = ReturnType<typeof initializer>;
 
-  store.setState = (updater, replace, ...a) => {
-    const nextState = (
-      typeof updater === 'function' ? create(updater as any) : updater
-    ) as ((s: T) => T) | T | Partial<T>;
+    store.setState = (updater, replace, ...a) => {
+      const nextState = (
+        typeof updater === 'function'
+          ? create(
+              updater as any,
+              options ? { ...options, enablePatches: false } : options
+            )
+          : updater
+      ) as ((s: T) => T) | T | Partial<T>;
 
-    return set(nextState as any, replace, ...a);
+      return set(nextState as any, replace, ...a);
+    };
+
+    return initializer(store.setState, get, store);
   };
-
-  return initializer(store.setState, get, store);
-};
 
 export const mutative = mutativeImpl as unknown as Mutative;
