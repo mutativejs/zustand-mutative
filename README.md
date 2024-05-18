@@ -6,7 +6,7 @@
 
 A [Mutative](https://github.com/unadlib/mutative) middleware for Zustand enhances the efficiency of immutable state updates.
 
-`zustand-mutative` is 2-6x faster than zustand with spread operation, more than 10x faster than `zustand/middleware/immer`.[Read more about the performance comparison in Mutative](https://mutative.js.org/docs/getting-started/performance).
+`zustand-mutative` is 2-6x faster than zustand with spread operation, more than 10x faster than `zustand/middleware/immer`. [Read more about the performance comparison in Mutative](https://mutative.js.org/docs/getting-started/performance).
 
 ## Installation
 
