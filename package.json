@@ -1,6 +1,6 @@
 {
   "name": "zustand-mutative",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A Mutative middleware for Zustand enhances the efficiency of immutable state updates.",
   "main": "dist/index.cjs.js",
   "unpkg": "dist/index.umd.js",
@@ -91,7 +91,7 @@
   },
   "peerDependencies": {
     "@types/react": "^18.0 || ^17.0",
-    "mutative": "^1.0.5",
+    "mutative": "^1.0.6",
     "react": "^18.0 || ^17.0",
     "zustand": "^4.0"
   }
