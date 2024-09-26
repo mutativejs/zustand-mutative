@@ -1,6 +1,6 @@
 {
   "name": "zustand-mutative",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "A Mutative middleware for Zustand enhances the efficiency of immutable state updates.",
   "main": "dist/index.cjs.js",
   "unpkg": "dist/index.umd.js",
