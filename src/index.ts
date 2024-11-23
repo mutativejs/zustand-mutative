@@ -79,7 +79,7 @@ const mutativeImpl: MutativeImpl =
           : updater
       ) as ((s: T) => T) | T | Partial<T>;
 
-      return set(nextState as any, replace, ...a);
+      return set(nextState as any, replace as any, ...a);
     };
 
     return initializer(store.setState, get, store);
