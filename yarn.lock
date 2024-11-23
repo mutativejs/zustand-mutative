@@ -4088,10 +4088,10 @@ ms@^2.1.1:
   resolved "https://registry.yarnpkg.com/ms/-/ms-2.1.3.tgz#574c8138ce1d2b5861f0b44579dbadd60c6615b2"
   integrity sha512-6FlzubTLZG3J2a/NVCAleEhjzq5oxgHyaCU9yYXvcLsvoVaHJq/s5xXI6/XXP6tz7R9xAOtHnSO/tXtF3WRTlA==
 
-mutative@^1.0.11:
-  version "1.0.11"
-  resolved "https://registry.yarnpkg.com/mutative/-/mutative-1.0.11.tgz#a03b48151800129fbc464257eff9ffa869c648a8"
-  integrity sha512-DfxsNvHfJlxp5yul7jhcNSI0EEWlP1vatiOr6Q7cvr8RNFBbIU5nENilUULbNJiOtbXznOxgbxHf4cYbqPDPlg==
+mutative@^1.1.0:
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/mutative/-/mutative-1.1.0.tgz#ff3e12a9903702e0487428510f8502dd4667e908"
+  integrity sha512-2PJADREjOusk3iJkD3rXV2YjAxTuaLxdfqtqTEt6vcY07LtEBR1seHuBHXWEIuscqRDGvbauYPs+A4Rj/KTczQ==
 
 mute-stream@0.0.8:
   version "0.0.8"
