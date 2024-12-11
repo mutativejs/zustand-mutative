@@ -51,7 +51,7 @@
     "@testing-library/react": "^16.1.0",
     "@types/jest": "^29.5.0",
     "@types/node": "^18.15.5",
-    "@types/react": "^18.2.66",
+    "@types/react": "^19.0.1",
     "@typescript-eslint/eslint-plugin": "^8.15.0",
     "@typescript-eslint/parser": "^8.15.0",
     "commitizen": "^4.3.0",
