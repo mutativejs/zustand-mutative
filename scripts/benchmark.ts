@@ -131,7 +131,7 @@ try {
     options: {
       title: {
         display: true,
-        text: 'Zustand with Mutative vs Zustand vs Zustand with Immer - Performance',
+        text: 'Zustand with Mutative vs Zustand with Immer - Performance',
       },
       legend: {
         position: 'bottom',
