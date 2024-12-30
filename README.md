@@ -10,6 +10,19 @@ With the Mutative middleware, you can simplify the handling of immutable data in
 
 `zustand-mutative` is 2-6x faster than zustand with spread operation, more than 10x faster than `zustand/middleware/immer`. [Read more about the performance comparison in Mutative](https://mutative.js.org/docs/getting-started/performance).
 
+## Benchmarks
+
+Measure(ops/sec) to update 50K arrays and 1K objects, bigger is better([view source](https://github.com/unadlib/mutative/blob/main/test/performance/benchmark.ts)). [Mutative v1.1.0 vs Immer v10.1.1]
+
+![Benchmark](benchmark.jpg)
+
+```
+Zustand with Mutative - Update big array and object x 5,169 ops/sec ±2.09% (85 runs sampled)
+Zustand with Immer - Update big array and object x 251 ops/sec ±0.40% (92 runs sampled)
+
+The fastest method is Zustand with Mutative - Update big array and object
+```
+
 ## Installation
 
 In order to use the Mutative middleware in Zustand, you will need to install Mutative and Zustand as a direct dependency.
@@ -48,7 +61,6 @@ export const useCountStore = create<State & Actions>()(
   }))
 );
 ```
-
 
 ### Mutative Options
 
