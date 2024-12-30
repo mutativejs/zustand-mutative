@@ -12,7 +12,7 @@ With the Mutative middleware, you can simplify the handling of immutable data in
 
 ## Benchmarks
 
-Measure(ops/sec) to update 50K arrays and 1K objects, bigger is better([view source](https://github.com/unadlib/mutative/blob/main/test/performance/benchmark.ts)). [Mutative v1.1.0 vs Immer v10.1.1]
+Measure(ops/sec) to update 50K arrays and 1K objects, bigger is better([view source](./scripts/benchmark.ts)). [Mutative v1.1.0 vs Immer v10.1.1]
 
 ![Benchmark](benchmark.jpg)
 
