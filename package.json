@@ -98,7 +98,7 @@
     "typedoc-plugin-markdown": "^4.2.10",
     "typescript": "^5.7.2",
     "yargs": "^17.7.2",
-    "zustand": "^5.0.2"
+    "zustand": "^5.0.5"
   },
   "config": {
     "commitizen": {
