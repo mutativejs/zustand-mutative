@@ -1,7 +1,7 @@
 import {
   create,
   type Options as MutativeOptions,
-  PatchesOptions,
+  type PatchesOptions,
 } from 'mutative';
 import type { Draft } from 'mutative';
 import type { StateCreator, StoreMutatorIdentifier } from 'zustand';
