@@ -12,13 +12,13 @@ With the Mutative middleware, you can simplify the handling of immutable data in
 
 ## Benchmarks
 
-Measure(ops/sec) to update 50K arrays and 1K objects, bigger is better([view source](./scripts/benchmark.ts)). [Mutative v1.1.0 vs Immer v10.1.1]
+Measure(ops/sec) to update 50K arrays and 1K objects, bigger is better([view source](./scripts/benchmark.ts)). [Mutative v1.3.0 vs Immer v10.1.3]
 
 ![Benchmark](benchmark.jpg)
 
 ```
-Zustand with Mutative - Update big array and object x 5,169 ops/sec ±2.09% (85 runs sampled)
-Zustand with Immer - Update big array and object x 251 ops/sec ±0.40% (92 runs sampled)
+Zustand with Mutative - Update big array and object x 5,236 ops/sec ±2.39% (83 runs sampled)
+Zustand with Immer - Update big array and object x 255 ops/sec ±0.23% (87 runs sampled)
 
 The fastest method is Zustand with Mutative - Update big array and object
 ```
@@ -68,9 +68,10 @@ export const useCountStore = create<State & Actions>()(
 - [Auto Freeze](https://mutative.js.org/docs/advanced-guides/auto-freeze)
 - [Marking data structure](https://mutative.js.org/docs/advanced-guides/mark)
 
-
 ## Credits
-`zustand-mutative` is inspired by `zustand/middleware/immer`. 
+
+`zustand-mutative` is inspired by `zustand/middleware/immer`.
 
 ## License
+
 `zustand-mutative` is [MIT licensed](https://github.com/mutativejs/zustand-mutative/blob/main/LICENSE).
