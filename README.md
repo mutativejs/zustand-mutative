@@ -91,6 +91,8 @@ export const useCountStore = create<State & Actions>()(
 - [Auto Freeze](https://mutative.js.org/docs/advanced-guides/auto-freeze)
 - [Marking data structure](https://mutative.js.org/docs/advanced-guides/mark)
 
+With `enableAutoFreeze: true`, the values that the state holds are frozen, but the root state object stays unfrozen unless `set()` replaces the state, as in `set(recipe, true)`: by default, Zustand merges the next state into a new root object.
+
 ## Credits
 
 `zustand-mutative` is inspired by `zustand/middleware/immer`.
