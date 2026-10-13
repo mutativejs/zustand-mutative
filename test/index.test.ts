@@ -219,7 +219,9 @@ test('Keeping the state when a recipe fails', () => {
       draft.count += 1;
       return { count: 1 };
     })
-  ).toThrow();
+  ).toThrow(
+    /Either the value is returned as a new non-draft value|Minified Mutative error #5;/
+  );
   expect(store.getState()).toBe(state);
   expect(state).toEqual({ count: 0, list: [1] });
 });
