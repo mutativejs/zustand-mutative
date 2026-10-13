@@ -8,22 +8,9 @@ A [Mutative](https://github.com/unadlib/mutative) middleware for Zustand enhance
 
 With the Mutative middleware, you can simplify the handling of immutable data in Zustand in a mutable way, allowing you to use immutable state more conveniently.
 
-In the [benchmark below](#benchmarks), with auto-freeze on in both, `zustand-mutative` is about 2.7x as fast as `zustand/middleware/immer`; with auto-freeze off in both, Mutative's default, Immer is about 7% faster. Across the 97 workloads of Mutative's own benchmark, Mutative 2 was about 3.6x as fast as Immer with the same settings and 6.6x with each library's defaults. [Read more about the performance comparison in Mutative](https://mutative.js.org/docs/getting-started/performance).
+## Performance
 
-## Benchmarks
-
-Measure(ops/sec) to update 50K arrays and 1K objects, bigger is better([view source](./scripts/benchmark.ts)). Both libraries run with auto-freeze off, and then both with auto-freeze on; Immer freezes by default and Mutative does not. [Mutative v2.0.0 vs Immer v11.1.21]
-
-![Benchmark](benchmark.jpg)
-
-```
-Zustand with Mutative - Auto-freeze off x 4,973 ops/sec ±2.47% (82 runs sampled)
-Zustand with Immer - Auto-freeze off x 5,342 ops/sec ±2.73% (77 runs sampled)
-Zustand with Mutative - Auto-freeze on x 763 ops/sec ±1.15% (89 runs sampled)
-Zustand with Immer - Auto-freeze on x 282 ops/sec ±0.52% (91 runs sampled)
-The fastest method with Auto-freeze off is Zustand with Immer - Auto-freeze off
-The fastest method with Auto-freeze on is Zustand with Mutative - Auto-freeze on
-```
+`zustand-mutative` runs the recipes that `set()` receives with Mutative 2, where `zustand/middleware/immer` runs them with Immer. In [Mutative's benchmark](https://mutative.js.org/docs/getting-started/performance) of 97 workloads, Mutative 2.0 was about 3.6x as fast as Immer 11.1.18 with matched settings, and 6.6x as fast with each library's defaults, under which Immer freezes the next state and Mutative does not (geometric means). A hand-written reducer that copies only what it changes was faster still in most of those workloads. The [performance summary](https://github.com/unadlib/mutative/blob/main/perf-testing/reports/SUMMARY.md) has the complete results, the method and their limits.
 
 ## Installation
 
