@@ -10,10 +10,12 @@ jobs:
       id-token: write
     steps:
       - uses: actions/checkout@v7
+      # No registry-url: the .npmrc that it writes reads NODE_AUTH_TOKEN, which
+      # trusted publishing leaves unset, and Yarn 1 fails on an unset variable
+      # there. npm publish gets its token from OIDC for the default registry.
       - uses: actions/setup-node@v7
         with:
           node-version: '24.x'
-          registry-url: 'https://registry.npmjs.org'
           package-manager-cache: false
       - run: yarn install --frozen-lockfile
       - run: yarn build
