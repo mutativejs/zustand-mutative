@@ -23,5 +23,6 @@ jobs:
         yarn build
         yarn test
         yarn test:production
+        yarn test:dist
       env:
         CI: true
