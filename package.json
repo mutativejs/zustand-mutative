@@ -39,8 +39,7 @@
     "clean": "rimraf dist",
     "build": "yarn clean && yarn build:prod",
     "build:prod": "NODE_ENV=production rollup --config --bundleConfigAsCjs",
-    "commit": "yarn git-cz",
-    "benchmark": "NODE_ENV=production tsx scripts/benchmark.ts"
+    "commit": "yarn git-cz"
   },
   "repository": {
     "type": "git",
