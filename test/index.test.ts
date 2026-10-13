@@ -221,14 +221,20 @@ test('Keeping the state when a recipe fails', () => {
   expect(store.getState()).toBe(state);
 
   // Mutative throws for a recipe that changes the draft and returns another
-  // value, with a minified error code in production builds.
+  // value, with a minified error code in production builds, which
+  // `yarn test:production` runs.
+  const production =
+    (globalThis as { __MUTATIVE_BUILD__?: string }).__MUTATIVE_BUILD__ ===
+    'production';
   expect(() =>
     store.setState((draft) => {
       draft.count += 1;
       return { count: 1 };
     })
   ).toThrow(
-    /Either the value is returned as a new non-draft value|Minified Mutative error #5;/
+    production
+      ? /^Minified Mutative error #5;/
+      : /^Either the value is returned as a new non-draft value/
   );
   expect(store.getState()).toBe(state);
   expect(state).toEqual({ count: 0, list: [1] });
