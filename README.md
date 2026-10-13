@@ -12,13 +12,13 @@ With the Mutative middleware, you can simplify the handling of immutable data in
 
 ## Benchmarks
 
-Measure(ops/sec) to update 50K arrays and 1K objects, bigger is better([view source](./scripts/benchmark.ts)). [Mutative v1.3.0 vs Immer v10.1.3]
+Measure(ops/sec) to update 50K arrays and 1K objects, bigger is better([view source](./scripts/benchmark.ts)). [Mutative v2.0.0 vs Immer v10.1.3]
 
 ![Benchmark](benchmark.jpg)
 
 ```
-Zustand with Mutative - Update big array and object x 5,236 ops/sec ±2.39% (83 runs sampled)
-Zustand with Immer - Update big array and object x 255 ops/sec ±0.23% (87 runs sampled)
+Zustand with Mutative - Update big array and object x 5,003 ops/sec ±1.89% (83 runs sampled)
+Zustand with Immer - Update big array and object x 231 ops/sec ±4.95% (79 runs sampled)
 
 The fastest method is Zustand with Mutative - Update big array and object
 ```
