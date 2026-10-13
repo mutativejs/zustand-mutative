@@ -33,7 +33,7 @@
   },
   "scripts": {
     "test": "jest",
-    "test:production": "jest --moduleNameMapper '{\"^mutative$\":\"mutative/dist/mutative.cjs.production.min.js\"}'",
+    "test:production": "jest --config jest.production.config.js",
     "test:coverage": "jest --coverage && coveralls < coverage/lcov.info",
     "clean": "rimraf dist",
     "build": "yarn clean && yarn build:prod",
