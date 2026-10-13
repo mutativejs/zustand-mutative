@@ -1,8 +1,11 @@
 // Loads the built package by its name with import and require, as consumers
-// do, and fails on the warning that Node.js prints when it has to detect that
-// a file is ESM.
+// do, and its UMD build as a script tag does, and fails on the warning that
+// Node.js prints when it has to detect that a file is ESM.
 import assert from 'node:assert/strict';
+import { readFileSync } from 'node:fs';
 import { createRequire } from 'node:module';
+import { dirname, join } from 'node:path';
+import { runInThisContext } from 'node:vm';
 
 const warnings = [];
 process.on('warning', (warning) => {
@@ -39,7 +42,19 @@ const check = (mutative, label) => {
 check((await import('zustand-mutative')).mutative, 'import');
 check(require('zustand-mutative').mutative, 'require');
 
+// Without a bundler, the UMD build of zustand-mutative reads the `Mutative`
+// global that the UMD build of mutative defines. Both are loaded from the
+// files that their `unpkg` fields name, outside any CommonJS module.
+const loadUmd = (name) => {
+  const packagePath = require.resolve(`${name}/package.json`);
+  const { unpkg } = require(packagePath);
+  runInThisContext(readFileSync(join(dirname(packagePath), unpkg), 'utf8'));
+};
+loadUmd('mutative');
+loadUmd('zustand-mutative');
+check(globalThis.ZustandMutative.mutative, 'umd');
+
 // Node.js emits warnings on the next tick.
 await new Promise((resolve) => setImmediate(resolve));
 assert.deepEqual(warnings, []);
-console.log('zustand-mutative loads with import and require');
+console.log('zustand-mutative loads with import, require and its UMD build');
