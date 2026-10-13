@@ -1,11 +1,15 @@
 // Loads the built package by its name with import and require, as consumers
-// do, and fails on the warnings that Node.js prints for an ESM file that it
-// has to detect.
+// do, and fails on the warning that Node.js prints when it has to detect that
+// a file is ESM.
 import assert from 'node:assert/strict';
 import { createRequire } from 'node:module';
 
 const warnings = [];
-process.on('warning', (warning) => warnings.push(String(warning)));
+process.on('warning', (warning) => {
+  if (warning.code === 'MODULE_TYPELESS_PACKAGE_JSON') {
+    warnings.push(String(warning));
+  }
+});
 
 const require = createRequire(import.meta.url);
 const { createStore } = require('zustand/vanilla');
