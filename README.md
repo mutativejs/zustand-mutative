@@ -8,19 +8,21 @@ A [Mutative](https://github.com/unadlib/mutative) middleware for Zustand enhance
 
 With the Mutative middleware, you can simplify the handling of immutable data in Zustand in a mutable way, allowing you to use immutable state more conveniently.
 
-`zustand-mutative` is 2-6x faster than zustand with spread operation, more than 10x faster than `zustand/middleware/immer`. [Read more about the performance comparison in Mutative](https://mutative.js.org/docs/getting-started/performance).
+In the [benchmark below](#benchmarks), with auto-freeze on in both, `zustand-mutative` is about 2.7x as fast as `zustand/middleware/immer`; with auto-freeze off in both, Mutative's default, Immer is about 7% faster. Across the 97 workloads of Mutative's own benchmark, Mutative 2 was about 3.6x as fast as Immer with the same settings and 6.6x with each library's defaults. [Read more about the performance comparison in Mutative](https://mutative.js.org/docs/getting-started/performance).
 
 ## Benchmarks
 
-Measure(ops/sec) to update 50K arrays and 1K objects, bigger is better([view source](./scripts/benchmark.ts)). [Mutative v2.0.0 vs Immer v11.1.21]
+Measure(ops/sec) to update 50K arrays and 1K objects, bigger is better([view source](./scripts/benchmark.ts)). Both libraries run with auto-freeze off, and then both with auto-freeze on; Immer freezes by default and Mutative does not. [Mutative v2.0.0 vs Immer v11.1.21]
 
 ![Benchmark](benchmark.jpg)
 
 ```
-Zustand with Mutative - Update big array and object x 5,045 ops/sec ±1.96% (82 runs sampled)
-Zustand with Immer - Update big array and object x 263 ops/sec ±3.81% (85 runs sampled)
-
-The fastest method is Zustand with Mutative - Update big array and object
+Zustand with Mutative - Auto-freeze off x 4,973 ops/sec ±2.47% (82 runs sampled)
+Zustand with Immer - Auto-freeze off x 5,342 ops/sec ±2.73% (77 runs sampled)
+Zustand with Mutative - Auto-freeze on x 763 ops/sec ±1.15% (89 runs sampled)
+Zustand with Immer - Auto-freeze on x 282 ops/sec ±0.52% (91 runs sampled)
+The fastest method with Auto-freeze off is Zustand with Immer - Auto-freeze off
+The fastest method with Auto-freeze on is Zustand with Mutative - Auto-freeze on
 ```
 
 ## Installation
