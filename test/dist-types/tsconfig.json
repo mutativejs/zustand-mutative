@@ -1,0 +1,12 @@
+{
+  "compilerOptions": {
+    "module": "NodeNext",
+    "moduleResolution": "NodeNext",
+    "target": "ES2018",
+    "lib": ["ES2018"],
+    "strict": true,
+    "noEmit": true,
+    "types": []
+  },
+  "files": ["consumer.mts", "consumer.cts"]
+}
