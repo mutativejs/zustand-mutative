@@ -32,6 +32,27 @@ npm install zustand-mutative zustand mutative
 # Or use any package manager of your choice.
 ```
 
+| zustand-mutative | mutative |
+| ---------------- | -------- |
+| 2.x              | 2.x      |
+| 1.x              | 1.x      |
+
+### Upgrading to Mutative v2
+
+`zustand-mutative` 2.x declares `mutative` ^2.0.0 as its peer dependency, so upgrade both together:
+
+```bash
+npm install zustand-mutative@2 mutative@2
+```
+
+The middleware API is unchanged: `set()` takes the same recipes, and `mutative()` takes the same options. The Mutative changes that can affect a store are:
+
+- With `enableAutoFreeze: true`, Map and Set instances in the state are frozen too, so adding a property to them or replacing one of their methods fails.
+- Mutative selects its development or production build from `process.env.NODE_ENV`. Define it in every bundle, including bundles for Node.js, and in production, match errors by their `Minified Mutative error #<code>` codes instead of their messages.
+- Mutative targets ES2018, and so does `zustand-mutative`; transpile both for older engines. Without a bundler, map `mutative` to its production ESM build, `mutative/dist/mutative.esm.production.min.mjs`, as its default ESM build reads `process`, or load its UMD build, which defines the `Mutative` global that the UMD build of `zustand-mutative` reads.
+
+See the [migration guide](https://mutative.js.org/docs/advanced-guides/migration-v2/) for every change in Mutative v2.
+
 ## Usage
 
 ```typescript
