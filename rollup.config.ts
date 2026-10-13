@@ -26,6 +26,11 @@ export default {
       sourcemap: true,
     },
     {
+      format: 'es',
+      file: 'dist/index.esm.mjs',
+      sourcemap: true,
+    },
+    {
       format: 'umd',
       name: pkg.name
         .split('-')
