@@ -60,7 +60,8 @@ export default {
     terser(),
     {
       name: 'copy-dts-to-dmts',
-      writeBundle(options, bundle) {
+      // Once per build, after every output is written.
+      closeBundle() {
         console.log('Copying .d.ts to .d.mts...');
 
         const files = glob.sync(`dist/**/*.d.ts`, { absolute: true });
