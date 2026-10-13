@@ -4,6 +4,7 @@ import { Suite } from 'benchmark';
 import QuickChart from 'quickchart-js';
 import { create as createWithZustand } from 'zustand';
 import { immer } from 'zustand/middleware/immer';
+import { setAutoFreeze } from 'immer';
 import { mutative } from '../src';
 
 const labels: string[] = [];
@@ -29,7 +30,17 @@ type Store = Data & {
   update: () => void;
 };
 
-const getData = () => {
+const deepFreeze = <T>(value: T): T => {
+  if (typeof value === 'object' && value !== null && !Object.isFrozen(value)) {
+    Object.freeze(value);
+    Object.values(value).forEach(deepFreeze);
+  }
+  return value;
+};
+
+// With auto-freeze, the base state is frozen in advance, so the first freeze
+// of the whole state is not timed.
+const getData = (freeze: boolean) => {
   const baseState: Data = {
     arr: [],
     map: {},
@@ -49,65 +60,72 @@ const getData = () => {
     .forEach((_, i) => {
       baseState.map[i] = { i };
     });
-  return baseState;
-  // return deepFreeze(baseState);
+  return freeze ? deepFreeze(baseState) : baseState;
 };
 
 let baseState: any;
 let i: any;
 let store: any;
 
+const createMutativeStore = (enableAutoFreeze: boolean) => () => {
+  i = Math.random();
+  baseState = getData(enableAutoFreeze);
+  store = createWithZustand(
+    mutative<Store>(
+      (set) => ({
+        arr: baseState.arr,
+        map: baseState.map,
+        update: () => {
+          set((state) => {
+            state.arr.push(i);
+            state.map[i] = { i };
+          });
+        },
+      }),
+      { enableAutoFreeze }
+    )
+  );
+};
+
+// Immer freezes by default and Mutative does not, so each comparison sets
+// both to the same auto-freeze setting.
+const createImmerStore = (autoFreeze: boolean) => () => {
+  setAutoFreeze(autoFreeze);
+  i = Math.random();
+  baseState = getData(autoFreeze);
+  store = createWithZustand(
+    immer<Store>((set) => ({
+      arr: baseState.arr,
+      map: baseState.map,
+      update: () => {
+        set((state) => {
+          state.arr.push(i);
+          state.map[i] = { i };
+        });
+      },
+    }))
+  );
+};
+
+const update = () => {
+  store.getState().update();
+};
+
 const suite = new Suite();
 
 suite
-  .add(
-    'Zustand with Mutative - Update big array and object',
-    () => {
-      store.getState().update();
-    },
-    {
-      onStart: () => {
-        i = Math.random();
-        baseState = getData();
-        store = createWithZustand(
-          mutative<Store>((set) => ({
-            arr: baseState.arr,
-            map: baseState.map,
-            update: () => {
-              set((state) => {
-                state.arr.push(i);
-                state.map[i] = { i };
-              });
-            },
-          }))
-        );
-      },
-    }
-  )
-  .add(
-    'Zustand with Immer - Update big array and object',
-    () => {
-      store.getState().update();
-    },
-    {
-      onStart: () => {
-        i = Math.random();
-        baseState = getData();
-        store = createWithZustand(
-          immer<Store>((set) => ({
-            arr: baseState.arr,
-            map: baseState.map,
-            update: () => {
-              set((state) => {
-                state.arr.push(i);
-                state.map[i] = { i };
-              });
-            },
-          }))
-        );
-      },
-    }
-  )
+  .add('Zustand with Mutative - Auto-freeze off', update, {
+    onStart: createMutativeStore(false),
+  })
+  .add('Zustand with Immer - Auto-freeze off', update, {
+    onStart: createImmerStore(false),
+  })
+  .add('Zustand with Mutative - Auto-freeze on', update, {
+    onStart: createMutativeStore(true),
+  })
+  .add('Zustand with Immer - Auto-freeze on', update, {
+    onStart: createImmerStore(true),
+  })
   .on('cycle', (event: any) => {
     console.log(String(event.target));
     const [name, field = 'Update'] = event.target.name.split(' - ');
@@ -117,7 +135,14 @@ suite
     item.data[labels.indexOf(field)] = Math.round(event.target.hz);
   })
   .on('complete', function (this: any) {
-    console.log(`The fastest method is ${this.filter('fastest').map('name')}`);
+    labels.forEach((field) => {
+      const fastest = this.filter((bench: any) =>
+        bench.name.endsWith(` - ${field}`)
+      )
+        .filter('fastest')
+        .map('name');
+      console.log(`The fastest method with ${field} is ${fastest}`);
+    });
   })
   .run({ async: false });
 
