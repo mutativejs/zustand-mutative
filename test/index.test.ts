@@ -132,6 +132,14 @@ test('Freezing the next state with enableAutoFreeze', () => {
   expect(Object.isFrozen(state.tags)).toBe(true);
   expect(Object.isFrozen(state.owners)).toBe(true);
   expect(Object.isFrozen(state.owners.get('a'))).toBe(true);
+  expect(() => state.tags.add('x')).toThrow();
+  expect(() => state.tags.delete('a')).toThrow();
+  expect(() => state.tags.clear()).toThrow();
+  expect(() => state.owners.set('b', { name: 'Bob' })).toThrow();
+  expect(() => state.owners.delete('a')).toThrow();
+  expect(() => state.owners.clear()).toThrow();
+  expect([...state.tags]).toEqual(['a']);
+  expect([...state.owners.keys()]).toEqual(['a']);
 
   // A frozen state is drafted again by the next update.
   store.getState().addTodo('b');
